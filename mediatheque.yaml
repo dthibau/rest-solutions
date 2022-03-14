@@ -17,7 +17,7 @@ paths:
           in: query
           schema:
             type: string
-        - name: mediaType
+        - name: type
           in: query
           schema:
             type: string
@@ -45,13 +45,13 @@ paths:
                   value:
                     - id: 10
                       titre: Un CD
-                      mediaType: CD
+                      type: CD
                       CD: {
                         artiste: Nick Cave
                       }
                     - id: 21
                       titre: Romance in Marseille
-                      mediaType: Book
+                      type: Book
     post:
       tags:
         - Media
@@ -367,6 +367,7 @@ components:
         duree:
           type: integer
           format: int32
+          minimum: 1
     DVD:
       type: object
       properties:
@@ -375,6 +376,7 @@ components:
         duree:
           type: integer
           format: int32
+          minimum: 1
     Book:
       type: object
       properties:
@@ -382,6 +384,7 @@ components:
           type: string
         isbn:
           type: string
+          pattern: ^(?=(?:\D*\d){10}(?:(?:\D*\d){3})?$)[\d-]+$
     Medium:
       type: object
       properties:
@@ -390,16 +393,18 @@ components:
           format: int64
         titre:
           type: string
+          minLength: 1
         dateParution:
           type: string
-        mediaTtype:
+        type:
           type: string
           enum: [CD, DVD, Book]
-        detail:
-          type: object
-          oneOf:
-              - $ref: '#/components/schemas/CD'
-              - $ref: '#/components/schemas/DVD'
-              - $ref: '#/components/schemas/Book'
+        CD:
+          $ref: '#/components/schemas/CD'
+        DVD:
+          $ref: '#/components/schemas/DVD'
+        Book:
+          $ref: '#/components/schemas/Book'
 
           
+
