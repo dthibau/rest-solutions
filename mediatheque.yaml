@@ -1,0 +1,405 @@
+openapi: 3.0.1
+info:
+  title: API Mediatheque
+  version: v1
+servers:
+  - url: http://api.mediatheque.com/v1
+    description: API
+
+paths:
+  /media:
+    get:
+      tags:
+        - Media
+      operationId: find
+      parameters: 
+        - name: q
+          in: query
+          schema:
+            type: string
+        - name: mediaType
+          in: query
+          schema:
+            type: string
+        - name: page
+          in: query
+          schema:
+            type: number
+            format: int32
+        - name: size
+          in: query
+          schema:
+            type: number
+            format: int32          
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Medium'
+              examples:
+                CD:
+                  value:
+                    - id: 10
+                      titre: Un CD
+                      mediaType: CD
+                      CD: {
+                        artiste: Nick Cave
+                      }
+                    - id: 21
+                      titre: Romance in Marseille
+                      mediaType: Book
+    post:
+      tags:
+        - Media
+      operationId: createMedia
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Medium'
+        required: true
+      responses:
+        '201':
+          description: Création d'un media
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Medium'
+  /media/{id}:
+    get:
+      tags:
+        - Media
+      operationId: findById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Medium'
+        '404':
+          description: Le media n'a pas été trouvé
+          content:
+            application/json:
+              schema:
+                type: string
+    put:
+      tags:
+        - Media
+      operationId: replaceMedia
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Medium'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Medium'
+    delete:
+      tags:
+        - Media
+      operationId: deleteById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Suppression d'un media
+        '404':
+          description: Le media n'a pas été trouvé
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /media/{id}/exemplaires:
+    get:
+      tags:
+        - Exemplaires
+      operationId: findExemplaires
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Les exemplaires d'un media particulier
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Exemplaire'
+    post:
+      tags:
+        - Exemplaires
+      operationId: addExemplaire
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '201':
+          description: Ajout d'un exemplaire
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exemplaire'
+                
+  /media/{id}/exemplaires/{idExemplaire}:
+    put:
+      tags:
+        - Exemplaires
+      operationId: updateExemplaire
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: idExemplaire
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Exemplaire'
+      responses:
+        '200':
+          description: Mise à jour d'un exemplaire
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exemplaire'
+        '404':
+          description: Le media ou l'exemplaire n'a pas été trouvé
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      tags:
+        - Exemplaires
+      operationId: deleteExemplaire
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: idExemplaire
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: Suppression d'un exemplaire
+        '404':
+          description: Le media ou l'exemplaire n'a pas été trouvé
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /users/{id}/emprunts:
+    get:
+      tags:
+        - Emprunts
+      operationId: findEmpruntsByUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Les emprunts en cours du User
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Emprunt'
+        '404':
+          description: L'utilisateur n'existe pas
+          content:
+            application/json:
+              schema:
+                type: string
+    post:
+      tags:
+        - Emprunts
+      operationId: AddEmpruntsByUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Exemplaire'
+      responses:
+        '201':
+          description: Emprunt ajouté
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Emprunt'
+        '404':
+          description: L'utilisateur n'existe pas
+          content:
+            application/json:
+              schema:
+                type: string
+                
+  /users/{id}/emprunts/{idEmprunt}:
+    delete:
+      tags:
+        - Emprunts
+      operationId: removeEmpruntsByUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: idEmprunt
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '204':
+          description: L'emprunt a été supprimé, l'utilisateur a rendu ses exemplaires
+        '404':
+          description: L'utilisateur n'existe pas
+          content:
+            application/json:
+              schema:
+                type: string
+
+ 
+components:
+  schemas:
+    Emprunt:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        dateEmprunt:
+          type: string
+        dateRetour:
+          type: string
+        exemplaires:
+          type: array
+          items: 
+            $ref: '#/components/schemas/Exemplaire'
+    Exemplaire:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        dateEntree:
+          type: string
+        medium:
+          $ref: '#/components/schemas/Medium'
+    CD:
+      type: object
+      properties:
+        artiste:
+          type: string
+        nbTitres:
+          type: integer
+          format: int32
+        duree:
+          type: integer
+          format: int32
+    DVD:
+      type: object
+      properties:
+        realisateur:
+          type: string
+        duree:
+          type: integer
+          format: int32
+    Book:
+      type: object
+      properties:
+        auteur:
+          type: string
+        isbn:
+          type: string
+    Medium:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        titre:
+          type: string
+        dateParution:
+          type: string
+        mediaTtype:
+          type: string
+          enum: [CD, DVD, Book]
+        detail:
+          type: object
+          oneOf:
+              - $ref: '#/components/schemas/CD'
+              - $ref: '#/components/schemas/DVD'
+              - $ref: '#/components/schemas/Book'
+
+          
