@@ -20,15 +20,13 @@ public class BaseTestClass {
 
     @Autowired
     private MediaApiController mediaController;
-    
     @Autowired
-    UsersApiController userApiController;
-
+    private UsersApiController usersController;
     
     @BeforeEach
     public void setup() {
         StandaloneMockMvcBuilder standaloneMockMvcBuilder 
-          = MockMvcBuilders.standaloneSetup(mediaController, userApiController);
+          = MockMvcBuilders.standaloneSetup(mediaController, usersController);
         RestAssuredMockMvc.standaloneSetup(standaloneMockMvcBuilder);
     }
 }
