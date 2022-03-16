@@ -12,9 +12,3 @@ spring:
 logging:
   level:
     '[org.springframework.security]': debug
-    
-appli:
-  secretKey: azerty
-  validity: 3600000
-  rememberMe: 3600000
-  

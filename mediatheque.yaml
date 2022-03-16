@@ -286,7 +286,7 @@ paths:
             schema:
               type: array
               items:
-                $ref: '#/components/schemas/Exemplaire'
+                $ref: '#/components/schemas/Medium'
       responses:
         '201':
           description: Emprunt ajouté
