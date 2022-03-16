@@ -1,6 +1,6 @@
 package org.mediatheque.service;
 
-public class BusinessException extends Exception {
+public class BusinessException extends RuntimeException {
 
 	/**
 	 * 

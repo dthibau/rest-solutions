@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.openapitools.model.DVD;
 import org.openapitools.model.Medium;
+import org.openapitools.model.Medium.TypeEnum;
 
 import lombok.Data;
 
@@ -34,6 +35,7 @@ public class DVDEntity  extends MediaEntity implements Serializable{
 		DVD dvd = new DVD();
 		dvd.setRealisateur(realisateur);
 		dvd.setDuree(duree);
+		ret.setType(TypeEnum.DVD);
 		return ret;
 	}
 }

@@ -3,6 +3,7 @@ server:
 spring:
   jpa:
     show-sql: true
+    open-in-view: false
   jackson:
     date-format: org.mediatheque.RFC3339DateFormat
     serialization:

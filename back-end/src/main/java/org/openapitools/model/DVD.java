@@ -18,7 +18,7 @@ import javax.annotation.Generated;
  * DVD
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-03-14T15:51:42.098644+01:00[Europe/Paris]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-03-16T10:05:54.686218+01:00[Europe/Paris]")
 public class DVD   {
 
   @JsonProperty("realisateur")

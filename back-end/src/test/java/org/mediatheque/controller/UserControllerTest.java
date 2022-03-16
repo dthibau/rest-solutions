@@ -62,7 +62,7 @@ public class UserControllerTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = objectMapper.writeValueAsString(medias);
 		
-		mvc.perform(post("/v1/emprunts/1").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(post("/v1/users/1/emprunts").content(jsonString).contentType(MediaType.APPLICATION_JSON))
 		                     .andExpect(status().isCreated())
 		                     .andExpect(jsonPath("$.id").exists());
 

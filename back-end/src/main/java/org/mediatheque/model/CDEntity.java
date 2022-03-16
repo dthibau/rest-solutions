@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.openapitools.model.CD;
 import org.openapitools.model.Medium;
+import org.openapitools.model.Medium.TypeEnum;
 
 import lombok.Data;
 
@@ -41,6 +42,7 @@ public class CDEntity  extends MediaEntity implements Serializable {
 		cd.setArtiste(artiste);
 		cd.setDuree(duree);
 		cd.setNbTitres(nbTitres);
+		ret.setType(TypeEnum.CD);
 		return ret;
 	}
 }

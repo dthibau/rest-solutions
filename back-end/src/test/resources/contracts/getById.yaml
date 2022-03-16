@@ -12,6 +12,7 @@ response:
   status: 200
   body:
     id: 1
+    type: Book
   headers:
     Content-Type: application/json
   matchers:

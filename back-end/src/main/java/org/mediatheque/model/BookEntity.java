@@ -9,6 +9,7 @@ import javax.persistence.Table;
 
 import org.openapitools.model.Book;
 import org.openapitools.model.Medium;
+import org.openapitools.model.Medium.TypeEnum;
 
 import lombok.Data;
 
@@ -36,6 +37,7 @@ public class BookEntity extends MediaEntity implements Serializable {
 		book.setAuteur(ecrivain);
 		book.setIsbn(ISBN);
 		ret.setBook(book);
+		ret.setType(TypeEnum.BOOK);
 		return ret;
 	}
 

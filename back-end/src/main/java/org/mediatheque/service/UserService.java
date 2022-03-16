@@ -2,7 +2,9 @@ package org.mediatheque.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
 import javax.print.attribute.standard.Media;
 import javax.transaction.Transactional;
 
@@ -43,5 +45,12 @@ public class UserService {
 		userRepository.save(userEntity);
 		
 		return userEntity.getEmprunts().get(userEntity.getEmprunts().size()-1).asDto(); 
+	}
+	
+	public List<Emprunt> getEmprunts(Integer idUser) {
+		UserEntity user = userRepository.fullLoad(idUser.intValue()).orElseThrow(() -> new EntityNotFoundException("No such User : "+idUser));
+		
+		return user.getEmprunts().stream().map(e -> e.asDto()).collect(Collectors.toList());
+
 	}
 }

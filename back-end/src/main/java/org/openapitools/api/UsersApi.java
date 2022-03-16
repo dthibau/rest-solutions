@@ -6,8 +6,8 @@
 package org.openapitools.api;
 
 import org.openapitools.model.Emprunt;
-import org.openapitools.model.Exemplaire;
 import java.util.List;
+import org.openapitools.model.Medium;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Generated;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-03-14T15:51:42.098644+01:00[Europe/Paris]")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2022-03-16T10:05:54.686218+01:00[Europe/Paris]")
 @Validated
 @Tag(name = "users", description = "the users API")
 public interface UsersApi {
@@ -40,7 +40,7 @@ public interface UsersApi {
      * POST /users/{id}/emprunts
      *
      * @param id  (required)
-     * @param exemplaire  (optional)
+     * @param medium  (optional)
      * @return Emprunt ajouté (status code 201)
      *         or L&#39;utilisateur n&#39;existe pas (status code 404)
      */
@@ -60,9 +60,9 @@ public interface UsersApi {
     )
     default ResponseEntity<Emprunt> addEmpruntsByUser(
         @Parameter(name = "id", description = "", required = true, schema = @Schema(description = "")) @PathVariable("id") Long id,
-        @Parameter(name = "Exemplaire", description = "", schema = @Schema(description = "")) @Valid @RequestBody(required = false) List<Exemplaire> exemplaire
+        @Parameter(name = "Medium", description = "", schema = @Schema(description = "")) @Valid @RequestBody(required = false) List<Medium> medium
     ) {
-        return getDelegate().addEmpruntsByUser(id, exemplaire);
+        return getDelegate().addEmpruntsByUser(id, medium);
     }
 
 

@@ -42,6 +42,7 @@ public class MediaEntity implements Serializable {
 
 	public Medium asDto() {
 		Medium ret = new Medium();
+		ret.setId(id.longValue());
 		ret.setTitre(titre);
 		ret.setDateParution(date_parution.toString());
 		return ret;

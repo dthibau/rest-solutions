@@ -34,6 +34,9 @@ public class UserIntegrationTest {
 	Medium bookBaru = new Medium();
 	Medium dvdDelepine = new Medium();
 	Medium cdTaha = new Medium();
+	
+	String empruntTemplate = "/v1/users/{idUser}/emprunts";
+	
 
 	@BeforeEach
 	public void setup() {
@@ -53,7 +56,7 @@ public class UserIntegrationTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = objectMapper.writeValueAsString(medias);
 
-		mvc.perform(post("/v1/emprunts/2").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(post(empruntTemplate,2).content(jsonString).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isCreated()).andExpect(jsonPath("$.id").exists());
 
 	}
@@ -67,7 +70,7 @@ public class UserIntegrationTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = objectMapper.writeValueAsString(medias);
 
-		mvc.perform(get("/v1/emprunts/1").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get(empruntTemplate,1).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$[0].id").exists());
 
@@ -82,7 +85,7 @@ public class UserIntegrationTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = objectMapper.writeValueAsString(medias);
 
-		mvc.perform(post("/v1/emprunts/1").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(post(empruntTemplate,1).content(jsonString).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isPreconditionFailed());
 
 	}
@@ -95,7 +98,7 @@ public class UserIntegrationTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = objectMapper.writeValueAsString(medias);
 
-		mvc.perform(post("/v1/emprunts/2").content(jsonString).contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(post(empruntTemplate,2).content(jsonString).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isPreconditionFailed());
 
 	}
@@ -108,7 +111,7 @@ public class UserIntegrationTest {
 		ObjectMapper objectMapper = new ObjectMapper();
 		String jsonString = objectMapper.writeValueAsString(medias);
 
-		mvc.perform(get("/v1/emprunts/999").contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get(empruntTemplate,999).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());
 
 	}
